@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitLearn - Advanced Git & GitHub Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="top-nav">
+        <div class="logo">octo-learn</div>
+        <div class="nav-links">
+            <button id="nav-terminal" class="nav-btn active">Terminal Training</button>
+            <button id="nav-gui" class="nav-btn">GitHub GUI Training</button>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div id="sidebar-terminal">
+                <h2>Git Workflow</h2>
+                <ul id="progress-list"></ul>
+            </div>
+
+            <div id="sidebar-gui" style="display: none;">
+                <h2>GUI Mission</h2>
+                <div class="mission-text" id="mission-instructions">Loading mission...</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div id="module-terminal" class="module active">
+                <header class="gh-header">
+                    <h1 id="lesson-title">Welcome to GitLearn</h1>
+                </header>
+                <div class="lesson-box">
+                    <p id="lesson-text">Loading simulation...</p>
+                </div>
+                <div class="terminal-container">
+                    <div class="terminal-header"><span>bash - user@gitlearn: ~/ml_project</span></div>
+                    <div id="terminal-output"></div>
+                    <div class="terminal-input-line">
+                        <span class="prompt" id="term-prompt">user@gitlearn:~/ml_project$</span>
+                        <input type="text" id="terminal-input" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div id="module-gui" class="module fake-github-ui" style="display: none;">
+
+                <div id="screen-dashboard" class="screen active">
+                    <div class="gh-top-nav-fake"><span class="user-badge">it-student</span></div>
+                    <div class="dashboard-content">
+                        <h3>Top Repositories</h3>
+                        <button class="btn-primary" id="btn-new-repo">New Repository</button>
+                    </div>
+                </div>
+
+                <div id="screen-create-repo" class="screen">
+                    <h2>Create a new repository</h2>
+                    <hr class="divider">
+                    <div class="form-group">
+                        <label>Repository name *</label>
+                        <div class="input-row">
+                            <span>it-student / </span>
+                            <input type="text" id="repo-name-input" placeholder="e.g. mobile-app-dev">
+                        </div>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="add-readme" checked>
+                        <label for="add-readme"><strong>Add a README file</strong></label>
+                    </div>
+                    <button class="btn-primary" id="btn-create-repo" disabled>Create repository</button>
+                </div>
+
+                <div id="screen-repo-view" class="screen">
+                    <div class="repo-header">
+                        <h2 class="repo-title">it-student / <span class="repo-name-display">mobile-app-dev</span></h2>
+                        <div class="repo-nav-tabs">
+                            <span class="repo-tab active">
+                                <> Code
+                            </span>
+                            <span class="repo-tab" id="tab-pr">⑂ Pull requests <span class="badge"
+                                    id="pr-badge">0</span></span>
+                        </div>
+                    </div>
+
+                    <div class="repo-controls">
+                        <button class="btn-secondary" id="branch-selector">🔀 main ▾</button>
+                        <button class="btn-secondary" id="btn-add-file">Add file ▾</button>
+                    </div>
+
+                    <div class="file-box" id="file-list">
+                    </div>
+                </div>
+
+                <div id="screen-add-file" class="screen">
+                    <div class="repo-header">
+                        <h2 class="repo-title">it-student / <span class="repo-name-display">mobile-app-dev</span></h2>
+                    </div>
+                    <div class="input-row" style="margin-bottom: 20px;">
+                        <span>it-student / mobile-app-dev / </span>
+                        <input type="text" id="new-file-name" placeholder="Name your file...">
+                    </div>
+                    <div class="edit-box">
+                        <textarea id="new-file-content" rows="10" placeholder="Enter file contents here..."></textarea>
+                    </div>
+                    <div class="commit-box">
+                        <input type="text" id="new-file-commit-msg" class="commit-input" value="Create new file">
+                        <div style="margin-top:10px;">
+                            <input type="radio" id="commit-main" name="commit-target" value="main" checked>
+                            <label for="commit-main">Commit directly to the <strong>main</strong> branch.</label><br>
+                            <input type="radio" id="commit-new" name="commit-target" value="new-branch">
+                            <label for="commit-new">Create a <strong>new branch</strong> for this commit and start a
+                                pull request.</label>
+                        </div>
+                        <button class="btn-primary" id="btn-commit-new-file" style="margin-top:15px;">Commit new
+                            file</button>
+                    </div>
+                </div>
+
+                <div id="screen-pr" class="screen">
+                    <div class="repo-header">
+                        <h2 class="repo-title">Open a pull request</h2>
+                        <p class="text-muted">Create a new pull request by comparing changes across two branches.</p>
+                    </div>
+                    <div class="pr-compare-box">
+                        base: <strong>main</strong> ← compare: <strong>add-license-1</strong>
+                    </div>
+                    <div class="commit-box" style="margin-top:20px;">
+                        <input type="text" class="commit-input" value="Add MIT License" readonly>
+                        <textarea rows="4" class="commit-input"
+                            readonly>Adding standard open source license for the project.</textarea>
+                        <button class="btn-primary" id="btn-create-pr">Create pull request</button>
+                    </div>
+                </div>
+
+                <div id="screen-merge-pr" class="screen">
+                    <div class="repo-header">
+                        <h2>Add MIT License <span class="text-muted">#1</span></h2>
+                    </div>
+                    <div class="pr-status success-bg">
+                        <h3>This branch has no conflicts with the base branch</h3>
+                        <p class="text-muted">Merging can be performed automatically.</p>
+                        <button class="btn-success" id="btn-merge-pr">Merge pull request</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
